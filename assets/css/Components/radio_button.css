@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Ubuntu:wght@300;400&display=swap');
+
+.name_task{
+    padding: 20px 30px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 20px;
+}
+
+label {
+  display: flex;
+  cursor: pointer;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.375em;
+}
+label input {
+  position: absolute;
+  left: -9999px;
+}
+label input:checked + span:before {
+  box-shadow: inset 0 0 0 0.3em #e25a00;
+}
+label span {
+  display: flex;
+  align-items: center;
+  padding: 0.375em 0.75em 0.375em 0.375em;
+  border-radius: 99em;
+  transition: 0.25s ease;
+}
+label span:before {
+  display: flex;
+  flex-shrink: 0;
+  content: "";
+  background-color: transparent;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin-right: 0.375em;
+  transition: 0.25s ease;
+  box-shadow: inset 0 0 0 0.125em #e25a00;
+}
+
+.container_task {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0px 30px;
+  font-family: 'Ubuntu', sans-serif;
+}

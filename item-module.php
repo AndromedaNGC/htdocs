@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="assets/css/Components/_item-module.css">
     <link rel="stylesheet" href="assets/css/Components/task-modal.css">
     <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
+    <link rel="stylesheet" href="assets/css/Components/radio_button.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
@@ -51,7 +52,7 @@
         if(isset($_GET['id']))
             $item_id = $_GET['id'];
         //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.text_task,
+        $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.question_task,
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
         $items_1 = mysqli_query($connect, "SELECT modules.id, modules.level,modules.name_module,modules.num_of_task,modules.completed,
@@ -163,12 +164,11 @@
                  $(document).ready(function(){
                     $('.btn_task').on('click', function(){
                         $.ajax({
-                            // type: "POST",
-                            // url: "vendor/showtask.php",
-                            // data: "btn_task="+$(".btn_task").val(),
+                            type: "POST",
+                            url: "vendor/showtask.php",
+                            data: "btn_task="+$(".btn_task").val(),
                             success: function(html){
-                                // $(".solve_task").html(html);
-                                alert("btn_task="+$(".btn_task").val());
+                                $(".solve_task").html(html);
                             } 
                         });
                         return false;

@@ -113,10 +113,6 @@
 .task span{
     margin-left: 20px;
 }
-.btn_task:first-child{
-    margin: 7px 0px;
-    margin-right: 10px;
-}
 .btn_task{
     background-color: var(--app-bg-dark);
     width: 120px;

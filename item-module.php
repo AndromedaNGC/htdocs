@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="assets/css/Components/_item-module.css">
     <link rel="stylesheet" href="assets/css/Components/task-modal.css">
     <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -51,7 +54,6 @@
         $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.text_task,
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
-        
         $items_1 = mysqli_query($connect, "SELECT modules.id, modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,files.img_file,files.title_file,files.link,modules.status from 
         modules inner join files on modules.id_files=files.id where modules.id=$item_id");
@@ -148,19 +150,36 @@
             while($item=mysqli_fetch_assoc($items))
             {
             ?>  
-                <div class="task" onClick="<?$get_item=$item['id_tasks'];?>'">
-                    <span><?=$item['title_task'];?></span>
-                    <img src="assets/img/icons/files/<?=$item['status_img_task'];?>" alt="">
-                </div>
+                <button class="btn_task" id="btn_task_id" onClick="document.getElementById('btn_task_id').value=<?=$item['id_tasks'];?>">
+                    <div class="task">
+                        <span><?=$item['title_task'];?></span>
+                        <img src="assets/img/icons/files/<?=$item['status_img_task'];?>" alt="">
+                    </div>
+                </button>
             <?php
             }
             ?>
-            
+            <script>
+                 $(document).ready(function(){
+                    $('.btn_task').on('click', function(){
+                        $.ajax({
+                            // type: "POST",
+                            // url: "vendor/showtask.php",
+                            // data: "btn_task="+$(".btn_task").val(),
+                            success: function(html){
+                                // $(".solve_task").html(html);
+                                alert("btn_task="+$(".btn_task").val());
+                            } 
+                        });
+                        return false;
+                    });
+                });
+            </script>
             </div>
             <h3>Выполнение задания</h3>
             <div class="item_center_solve">
                 <div class="solve_task">
-                    <h1><?=$get_item;?></h1>
+                    <h1 id="cost"></h1>
                 </div>
                 <div class="for_solve">
                     <button id="lose">Сдаться</button>

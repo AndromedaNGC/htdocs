@@ -69,19 +69,4 @@
     color: #999;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 2em 0 0 0;
-  }
-  .card_news .thumb {
-    padding-bottom: 60%;
-    background-size: cover;
-    background-position: center center;
-  }
-  
-  @media (min-width: 60em) {
-    .item-1 {
-      grid-column: 1/span 2;
-    }
-    .item-1 h1 {
-      font-size: 24px;
-    }
-  }
+    mar

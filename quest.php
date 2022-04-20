@@ -1,4 +1,4 @@
-p<?php 
+<?php 
     require "vendor/connect.php";
     session_start();
     if (!$_SESSION['user']) {
@@ -34,6 +34,7 @@ p<?php
             <label class="menu-button-wrapper" for="">
                 <input type="checkbox" class="menu-button"><img src="assets/img/icons/images.jpeg"></input>
                 <div class="item-list">
+                    <h4><?= $_SESSION['user']['login'] ?></h4>
                     <a href="vendor/logout.php">Выйти</a>
                 </div>
             </label>

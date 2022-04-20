@@ -42,6 +42,7 @@
             <label class="menu-button-wrapper" for="">
                 <input type="checkbox" class="menu-button"><img src="assets/img/icons/images.jpeg"></input>
                 <div class="item-list">
+                    <h4><?= $_SESSION['user']['login'] ?></h4>
                     <a href="vendor/logout.php">Выйти</a>
                 </div>
             </label>
@@ -55,9 +56,8 @@
         $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.question_task,
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
-        $items_1 = mysqli_query($connect, "SELECT modules.id, modules.level,modules.name_module,modules.num_of_task,modules.completed,
-        modules.not_completed,modules.procent_complete,files.img_file,files.title_file,files.link,modules.status from 
-        modules inner join files on modules.id_files=files.id where modules.id=$item_id");
+        $items_1 = mysqli_query($connect, "SELECT modules.id,files.img_file,files.title_file,files.link,modules.status from 
+        files inner join modules on files.id_module=modules.id where modules.id=$item_id");
     ?>
             
     <div class="merge_item">
@@ -154,7 +154,7 @@
                 <button class="btn_task" id="btn_task_id" onClick="document.getElementById('btn_task_id').value=<?=$item['id_tasks'];?>">
                     <div class="task">
                         <span><?=$item['title_task'];?></span>
-                        <img src="assets/img/icons/files/<?=$item['status_img_task'];?>" alt="">
+                        <img class="img_btn_task" src="assets/img/icons/files/<?=$item['status_img_task'];?>">
                     </div>
                 </button>
             <?php
@@ -182,10 +182,30 @@
                     <h1 id="cost"></h1>
                 </div>
                 <div class="for_solve">
-                    <button id="lose">Сдаться</button>
-                    <input id="solve" placeholder="Введите ответ: "> 
-                    <button id="done">Готово</button>
+                    <button id="lose" onClick="document.getElementById('btn_task_id').value">Сдаться</button>
+                    <input id="solve" class="answer_solve" name="solve_answer" placeholder="Введите ответ: ">
+                    <button id="done" type="submit" onClick="document.getElementById('btn_task_id').value">Готово</button>
                 </div>
+                <script>
+                 $(document).ready(function(){
+                    $('#done').on('click', function(){
+                        one = $(".btn_task").val();
+                        two = $(".answer_solve").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "vendor/execute_task.php",
+                            data: ({
+                                btn_task:one,
+                                answer_solve:two
+                            }),
+                            success: function(data){
+                                $(".item_center_task").load(location.reload());
+                            } 
+                        });
+                        return false;
+                    });
+                });
+                </script>
             </div>
         </div>
         <div class="item_right">
@@ -195,7 +215,7 @@
                 while($item=mysqli_fetch_assoc($items_1))
                 {
                 ?>  
-                    <a target="_blank" href="http://<?=$item['link']?>">
+                    <a target="_blank" href="./assets/PDF/Modules/Module1/<?=$item['link']?>">
                         <img src="assets/img/icons/files/<?=$item['img_file']?>" alt="">
                         <p><?=$item['title_file']?></p>
                     </a>

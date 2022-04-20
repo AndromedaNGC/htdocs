@@ -1,4 +1,3 @@
-
 <div class="menu-item">
             <div class="menu-text">
                 <a href="#">Квест</a>
@@ -58,7 +57,7 @@
                 <div class="top-container gb c icon-box">
                     <div class="icon big"><i class="far fa-book"></i></div>
                     <div class="text">
-                        <div class="title">Руководство по квету</div>
+                        <div class="title">Гайд по квету</div>
                         <div class="sub-text">Не знаете как проходить наш квест?</div>
                     </div>
                 </div>
@@ -106,5 +105,3 @@
                 </div>
             </div>
         </div>
-
-      

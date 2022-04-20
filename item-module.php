@@ -188,6 +188,7 @@
                 </div>
                 <script>
                  $(document).ready(function(){
+                    $("#solve").val("");
                     $('#done').on('click', function(){
                         one = $(".btn_task").val();
                         two = $(".answer_solve").val();

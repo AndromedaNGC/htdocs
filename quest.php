@@ -44,18 +44,22 @@
         <main class="modules">
         <?php 
             //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-            $items = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module,modules.num_of_task,
-            modules.procent_complete,modules.completed,modules.not_completed,tags.name_tag from modules inner join tags on modules.id_tags=tags.id");
+            $items = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module,
+            modules.procent_complete,modules.completed,modules.not_completed,tags.name_tag, COUNT(tasks.id_module) as count_tasks from tasks INNER JOIN modules ON tasks.id_module=modules.id
+             inner join tags on modules.id_tags=tags.id WHERE tasks.id_module=modules.id GROUP BY modules.id");
             ?>
             
             <?php 
             while($item=mysqli_fetch_assoc($items))
             {
             ?>  
+            <?php 
+                // $count_tasks = mysqli_query($connect, "SELECT COUNT(id_module) FROM tasks WHERE id_module");
+            ?>
                 <div class="card">
                     <h3 class="title-module"><span>L<?=$item['level'];?></span><?=$item['name_module'];?></h3>
                     <div class="card-info" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
-                        <h4>Всего заданий: <span><?=$item['num_of_task']?></span></h4>
+                        <h4>Всего заданий: <span><?=$item['count_tasks']?></span></h4>
                         <div class="merge-circle"><p><div class="card-circle-green"></div>Выполнено: <span class="num-task"><?=$item['completed'];?></span></p></div>  
                         <div class="merge-circle"><p><div class="card-circle-yellow"></div>Осталось: <span class="num-task"><?=$item['not_completed'];?></span></p></div>
                         <p class="tag"><?=$item['name_tag']?></p>

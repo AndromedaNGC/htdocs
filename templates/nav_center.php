@@ -29,14 +29,14 @@
         </div>
         <div class="menu-item">
             <div class="menu-text">
-                <a href="#">Новости</a>
+                <a href="#">Контакты</a>
             </div>
             <div class="sub-menu">
                 <div class="icon-box">
                     <div class="icon"><i class="fal fa-newspaper"></i></div>
                     <div class="text">
-                        <div class="title"><a href="news.php">Новости квеста </a><i class="far fa-arrow-right"></i></div>
-                        <div class="sub-text">О различных дополнениях и изменениях.</div>
+                        <div class="title"><a href="news.php">О нас </a><i class="far fa-arrow-right"></i></div>
+                        <div class="sub-text">Здесь ты можешь узнать о том кто мы.</div>
                     </div>
                 </div>
                 <div class="icon-box">
@@ -49,50 +49,44 @@
                 <div class="sub-menu-holder"></div>
             </div>
         </div>
-        <div class="menu-item highlight">
+        <div class="menu-item">
             <div class="menu-text">
                 <a href="#">Архив</a>
             </div>
-            <div class="sub-menu triple">
-                <div class="top-container gb c icon-box">
-                    <div class="icon big"><i class="far fa-book"></i></div>
+                <div class="sub-menu">
+                <div class="icon-box">
+                    <div class="icon"><i class="far fa-book"></i></div>
                     <div class="text">
-                        <div class="title">Гайд по квету</div>
+                        <div class="title">Гайд по квету <i class="far fa-arrow-right"></i></div>
                         <div class="sub-text">Не знаете как проходить наш квест?</div>
                     </div>
                 </div>
-                <div class="box">
-                    <h3>Ваши сохранения</h3>
-                    <a href="#">Картинки</a>
-                    <a href="#">Статьи</a>
-                    <a href="#">Файлы</a>
-                    <a href="#">Пометки</a>
-                </div>
-                <div class="box">
-                    <h3>Рекомендуем</h3>
-                    <a href="#">Книги</a>
-                    <a href="#">Тесты</a>
-                    <a href="#">Идеи</a>
+                <div class="icon-box">
+                    <div class="icon"><i class="far fa-award"></i></div>
+                    <div class="text">
+                        <div class="title">Рекомендуем <i class="far fa-arrow-right"></i></div>
+                        <div class="sub-text">Наши рекомендации полезны для тебя</div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="menu-item">
             <div class="menu-text">
-                <a href="#">Сообщество</a>
+                <a href="#">Телеграмм</a>
             </div>
             <div class="sub-menu">
                 <div class="icon-box">
                     <div class="icon"><i class="far fa-satellite"></i></div>
                     <div class="text">
-                        <div class="title">Форум <i class="far fa-arrow-right"></i></div>
-                        <div class="sub-text">Присоеденяйся к сообществу.</div>
+                        <div class="title">Новости <i class="far fa-arrow-right"></i></div>
+                        <div class="sub-text">Подпишись чтобы узнавать новое о квесте.</div>
                     </div>
                 </div>
                 <div class="icon-box">
                     <div class="icon"><i class="fab fa-telegram"></i></div>
                     <div class="text">
-                        <div class="title">Telegram <i class="far fa-arrow-right"></i></div>
-                        <div class="sub-text">Подпишись на наш Telegram канал.</div>
+                        <div class="title">Вопросы и ответы <i class="far fa-arrow-right"></i></div>
+                        <div class="sub-text">То место где сможешь задать свой вопрос.</div>
                     </div>
                 </div>
             </div>

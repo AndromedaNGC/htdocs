@@ -56,14 +56,30 @@
         $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.question_task,
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
+        
+        $items_procent = mysqli_query($connect, "SELECT modules.id, modules.procent_complete,modules.completed,modules.not_completed, 
+        COUNT(tasks.id_module) as count_tasks, SUM(tasks.status_task) as status_task from tasks INNER JOIN modules ON tasks.id_module=modules.id
+        WHERE tasks.id_module=$item_id");
+         
         $items_1 = mysqli_query($connect, "SELECT modules.id,files.img_file,files.title_file,files.link,modules.status from 
         files inner join modules on files.id_module=modules.id where modules.id=$item_id");
+        $counter_module;
+        $counter_success;
+        $counter_error;
     ?>
             
     <div class="merge_item">
         <div class="item_left">
             <h3>Статистика по модулю</h3>
             <div class="chart-row three">
+            <?php
+            while($item=mysqli_fetch_assoc($items_procent))
+            {    
+                global $counter_module,$counter_success,$counter_error;
+                $counter_module = $item['completed'];
+                $counter_success = $item['procent_complete'];
+                $counter_error = $item['not_completed'];
+            ?>
                         <div class="chart-container-wrapper">
                             <div class="chart-container">
                                 <div class="chart-info-wrapper">
@@ -75,15 +91,16 @@
 										<path class="circle-bg" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="70, 100" d="M18 2.0845
+										<path class="circle" stroke-dasharray="<?=$item['completed']?>, 100" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="18" y="20.35" class="percentage">70%</text>
+										<text x="14" y="20.35" class="percentage counter-number"></text>
+                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
 									</svg>
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="chart-container-wrapper">
                             <div class="chart-container">
                                 <div class="chart-info-wrapper">
@@ -95,14 +112,16 @@
 										<path class="circle-bg" d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="90, 100" d="M18 2.0845
+										<path class="circle" stroke-dasharray="<?=$item['procent_complete']?>, 100" d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="18" y="20.35" class="percentage">90%</text>
+                                        <text x="14" y="20.35" class="percentage counter-number-success"></text>
+                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
 									</svg>
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="chart-container-wrapper">
                             <div class="chart-container">
                                 <div class="chart-info-wrapper">
@@ -114,14 +133,34 @@
 										<path class="circle-bg" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="10, 100" d="M18 2.0845
+										<path class="circle" stroke-dasharray="<?=$item['not_completed']?>, 100" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="18" y="20.35" class="percentage">10%</text>
+                                        <text x="14" y="20.35" class="percentage counter-number-error"></text>
+                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
 									</svg>
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            const counter = function(elem, delay, num) {
+                            for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
+                                (function(index) {
+                                setTimeout(function() {
+                                    elem.textContent = index;
+                                    if(index == num) 
+                                        num++;
+                                }, delay*index);
+                                })(currentIndex);
+                            }
+                            }
+                            const counterNumber = document.getElementsByClassName('counter-number')[0];
+                            counter(counterNumber, 10, <?=$counter_module;?>);
+                            const counterNumber_success = document.getElementsByClassName('counter-number-success')[0];
+                            counter(counterNumber_success, 10, <?=$counter_success;?>);
+                            const counterNumber_error = document.getElementsByClassName('counter-number-error')[0];
+                            counter(counterNumber_error, 10, <?=$counter_error;?>);
+                        </script>
                         <div class="chart-container-wrapper">
                             <div class="chart-container">
                                 <div class="chart-info-wrapper">
@@ -136,11 +175,14 @@
 										<path class="circle" stroke-dasharray="30, 100" d="M18 2.0845
                         a 15.9155 15.9155 0 0 1 0 31.831
                         a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="18" y="20.35" class="percentage">30%</text>
+										<text x="18" y="20.35" class="percentage counter-number"></text>
 									</svg>
                                 </div>
                             </div>
                         </div>
+        <?php
+        }
+        ?>
                     </div>
         </div>
         <div class="item_center">
@@ -185,7 +227,7 @@
                     <button id="lose" onClick="document.getElementById('btn_task_id').value">Сдаться</button>
                     <input id="solve" class="answer_solve" name="solve_answer" placeholder="Введите ответ: ">
                     <button id="done" type="submit" onClick="document.getElementById('btn_task_id').value">Готово</button>
-                </div>
+                </div>   
                 <script>
                  $(document).ready(function(){
                     $("#solve").val("");
@@ -200,7 +242,8 @@
                                 answer_solve:two
                             }),
                             success: function(data){
-                                $(".item_center_task").load(location.reload());
+                                location.reload();
+                                
                             } 
                         });
                         return false;
@@ -244,6 +287,24 @@
             <li></li>
         </ul>
     </div>
+    <script>
+        const counter = function(elem, delay, num) {
+        for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
+            (function(index) {
+            setTimeout(function() {
+                elem.textContent = index;
+                if(index == num) 
+                    num++;
+            }, delay*index);
+            })(currentIndex);
+        }
+        }
+        const counterNumber = document.getElementsByClassName('counter-number')[0];
+        counter(counterNumber, 10, <?=$counter_module;?>);
+        // $counter_module;
+        // $counter_success;
+        // $counter_error;
+    </script>
     <script>
         let button = document.querySelector('.button');
         let buttonText = document.querySelector('.tick');

@@ -459,7 +459,6 @@ button {
     -webkit-animation: progress 1s ease-out forwards;
     animation: progress 1s ease-out forwards;
 }
-
 .circular-chart.orange .circle {
     stroke: #FFC700;
 }

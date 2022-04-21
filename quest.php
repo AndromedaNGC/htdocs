@@ -44,30 +44,36 @@
         <main class="modules">
         <?php 
             //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-            $items = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module,
-            modules.procent_complete,modules.completed,modules.not_completed,tags.name_tag, COUNT(tasks.id_module) as count_tasks from tasks INNER JOIN modules ON tasks.id_module=modules.id
-             inner join tags on modules.id_tags=tags.id WHERE tasks.id_module=modules.id GROUP BY modules.id");
+            $items = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module, 
+            modules.procent_complete,modules.completed,modules.not_completed,tags.name_tag, COUNT(tasks.id_module) as count_tasks, 
+            SUM(tasks.status_task) as status_task,(SELECT COUNT(status_img_task) FROM tasks WHERE status_img_task='lose.png' 
+            AND tasks.id_module=modules.id) AS img_task from tasks 
+            INNER JOIN modules ON tasks.id_module=modules.id inner join tags on modules.id_tags=tags.id 
+            WHERE tasks.id_module=modules.id GROUP BY modules.id");
             ?>
             
             <?php 
             while($item=mysqli_fetch_assoc($items))
-            {
+            {   
+                $left = $item['count_tasks'] - $item['status_task'];
+                $procent = (100 * $item['status_task'])/$item['count_tasks'];
+                $not_complete = 100 - $procent;
+                $error_task = (100 * $item['img_task'])/$item['count_tasks'];
+                $success = 100 - $error_task;
+                mysqli_query($connect, "UPDATE `modules` SET `completed`=$procent, `not_completed`=$error_task, `procent_complete`=$success  WHERE modules.id=".$item['id']."");
             ?>  
-            <?php 
-                // $count_tasks = mysqli_query($connect, "SELECT COUNT(id_module) FROM tasks WHERE id_module");
-            ?>
                 <div class="card">
                     <h3 class="title-module"><span>L<?=$item['level'];?></span><?=$item['name_module'];?></h3>
                     <div class="card-info" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
                         <h4>Всего заданий: <span><?=$item['count_tasks']?></span></h4>
-                        <div class="merge-circle"><p><div class="card-circle-green"></div>Выполнено: <span class="num-task"><?=$item['completed'];?></span></p></div>  
-                        <div class="merge-circle"><p><div class="card-circle-yellow"></div>Осталось: <span class="num-task"><?=$item['not_completed'];?></span></p></div>
+                        <div class="merge-circle"><p><div class="card-circle-green"></div>Выполнено: <span class="num-task"><?=$item['status_task'];?></span></p></div>  
+                        <div class="merge-circle"><p><div class="card-circle-yellow"></div>Осталось: <span class="num-task"><?=$left?></span></p></div>
                         <p class="tag"><?=$item['name_tag']?></p>
-                        <div class="merge-right-left"><p>Завершено на:</p><span><?=$item['procent_complete']?>%</span></div>
+                        <div class="merge-right-left"><p>Завершено на:</p><span><?=$procent?>%</span></div>
                     </div>
                     <div class="bar">
                         <div class="emptybar"></div>
-                        <div class="filledbar" style="width: <?=$item['procent_complete']?>%"></div>
+                        <div class="filledbar" style="width: <?=$procent?>%"></div>
                     </div>
                 </div>
         <?php

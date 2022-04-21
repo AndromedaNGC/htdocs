@@ -1,0 +1,20 @@
+CREATE TRIGGER count_tasks_for_module FOR tasks
+ACTIVE AFTER INSERT OR UPDATE OR DELETE
+AS
+DECLARE id_mod INT;
+DECLARE tasks_count INT;
+BEGIN
+  IF (deleting) THEN
+    id_mod = OLD.id_module;
+  ELSE
+    id_mod = NEW.id_module;
+ 
+  SELECT COUNT(*) 
+    FROM tasks 
+   WHERE id_module=:modules.id
+    INTO :tasks_count;
+ 
+  UPDATE 
+     SET num_of_task = :tasks_count
+   WHERE modules.id = :id_mod;
+END

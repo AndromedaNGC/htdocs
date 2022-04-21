@@ -13,13 +13,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Sirin+Stencil&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/Components/back_authorization.css">
     <link rel="stylesheet" href="assets/css/Components/_new_mind.css">
-    <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
-
+    <link rel="stylesheet" href="assets/css/Components/preloader.css">
+    <link rel="stylesheet" href="assets/css/Components/_profile.css">
 </head>
 <body>
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
-    <div class="name_cu"><?php include "templates/nav_center.php";?></div>
-        
+    <nav class="main_nav">
+        <?php include "templates/nav_center.php"?>
+    </nav>  
     
     <div class="merge">
         <main class="background">
@@ -71,10 +72,9 @@
                 <li></li>
         </ul>
     </div>
-    <script>
-        function sendMail() {
-            
-        }
-    </script>
+    <div class="holder">
+        <div class="preloader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <script src="assets/js/preloader.js"></script>
 </body>
 </html>

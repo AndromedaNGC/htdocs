@@ -1,0 +1,49 @@
+.menu-button-wrapper {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .menu-button-wrapper a {
+    text-decoration: none;
+  }
+  svg:not(:root).svg-inline--fa {
+    font-size: 20px;
+  }
+  .modal_con {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 9999;
+    width: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: rgba(77, 77, 77, .7); */
+    transition: all .4s;
+  }
+  
+  .modal_con:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .modal__content {
+    position: relative;
+    width: 50%;
+    height: 50vh;
+    bottom: 0;
+    /* background: #100e17; */
+    background-color: black;
+    padding: 1em 2em;
+  }
+  
+  .modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #585858;
+    text-decoration: none;
+  }

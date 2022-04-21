@@ -5,10 +5,15 @@
     /* Number of items you have */
     --item-width: calc(var(--menu-width) / var(--items));
 }
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-    margin: 0;
-    padding: 0;
     background: #100e17;
     font-family: 'Roboto', sans-serif;
     height: 100vh;
@@ -37,12 +42,12 @@ nav {
     display: flex;
     transform-style: preserve-3d;
     justify-content: space-evenly;
+    align-items: center;
     position: relative;
     z-index: 9999;
     margin: 0px auto;
     perspective: 2000px;
     flex-wrap: wrap;
-    top: 1em;
 }
 
 nav .menu-item {
@@ -53,11 +58,12 @@ nav .menu-item {
     display: flex;
     flex-basis: var(--item-width);
     box-sizing: border-box;
-    padding: 0.5em 0em;
+    padding: 1.5em 0.5em 0 0;
     justify-content: center;
-    perspective: 200px;
+    perspective: 20px;
     letter-spacing: 0.5px;
     min-height: 4em;
+    max-height: 20px;
 }
 
 nav .menu-text,
@@ -69,7 +75,12 @@ nav .menu-text a {
     transition: color 0.1s ease-out;
     text-align: center;
 }
-
+nav .menu-text{
+    position: relative;
+}
+nav .menu-text a {
+    margin: auto 0;
+}
 nav .menu-text a:hover {
     color: rgba(221, 221, 221, 0.5);
 }
@@ -85,7 +96,7 @@ nav .menu-text a:hover {
     transform-origin: 50% 7em 0em;
     opacity: 0;
     box-sizing: border-box;
-    top: 0rem;
+    margin-top: 20px;
     border-radius: 10px;
     background: #0e0b14;
     display: block;
@@ -147,6 +158,7 @@ nav .menu-item:nth-of-type(4):hover~#sub-menu-container #sub-menu-holder {
 .menu-item .sub-menu {
     position: absolute;
     top: 2.5em;
+    margin-top: 20px;
     color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     min-width: 27.5em;
@@ -170,7 +182,6 @@ nav .menu-item:nth-of-type(4):hover~#sub-menu-container #sub-menu-holder {
 
 .menu-item .sub-menu.triple {
     min-width: 30em;
-  
     display: grid;
     padding: 1.5em 2.5em;
     grid-template-columns: 55% 45%;
@@ -381,41 +392,54 @@ nav .menu-item.highlight:hover~#sub-menu-container #sub-menu-holder #sub-menu-bo
     color: rgba(255, 255, 255, 0.5);
 }
 
-.nav-bar {
-    color: #fff;
+.main_nav{
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-bar  {
     position: absolute;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    top: 1em;
     z-index: 999;
-    font-size: 20px;
     font-weight: 400;
 }
 
 .profile {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 70px;
+    width: 90px;
+    margin: 0 50px;
 }
 
 .profile img {
     border-radius: 50%;
     width: 35px;
     height: 35px;
+    margin-top: 4px;
 }
 
 .nav-bar div {
-    margin: 0 50px;
     height: 35px;
 }
-
+.logo{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+}
 .logo span {
     font-size: 16px;
     color: #B2B2B2;
     margin-left: 10px;
+    margin-top: 4px;
 }
 
 

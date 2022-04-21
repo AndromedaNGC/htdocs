@@ -19,26 +19,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sirin+Stencil&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/Components/back_animation.css">
-    <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
+    <link rel="stylesheet" href="assets/css/Components/preloader.css">
+    <link rel="stylesheet" href="assets/css/Components/_profile.css">
 </head>
 <body>
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
-    <nav id="menu">
+    <nav class="main_nav">
         <?php include "templates/nav_center.php"?>
-    </nav>
-    <nav class="nav-bar">
-        <div class="logo">Ura quest <span>  Квест / Модули</span></div>
-        <div class="profile">
-            <i class="far fa-bell"></i>
-
-            <label class="menu-button-wrapper" for="">
-                <input type="checkbox" class="menu-button"><img src="assets/img/icons/images.jpeg"></input>
-                <div class="item-list">
-                    <h4><?= $_SESSION['user']['login'] ?></h4>
-                    <a href="vendor/logout.php">Выйти</a>
-                </div>
-            </label>
-        </div>
     </nav>
     <div class="merge">
         <main class="modules">
@@ -80,8 +67,7 @@
         }
         ?>
         </main>
-    </div>
-    
+    </div>    
     <div class="area" >
         <ul class="circles">
                 <li></li>
@@ -96,5 +82,9 @@
                 <li></li>
         </ul>
     </div>
+    <div class="holder">
+        <div class="preloader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <script src="assets/js/preloader.js"></script>
 </body>
 </html>

@@ -22,8 +22,9 @@
     <link rel="stylesheet" href="assets/css/Components/back_animation.css">
     <link rel="stylesheet" href="assets/css/Components/_item-module.css">
     <link rel="stylesheet" href="assets/css/Components/task-modal.css">
-    <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
     <link rel="stylesheet" href="assets/css/Components/radio_button.css">
+    <link rel="stylesheet" href="assets/css/Components/preloader.css">
+    <link rel="stylesheet" href="assets/css/Components/_profile.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
@@ -31,23 +32,10 @@
 
 <body>
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
-    <nav id="menu">
+    <nav class="main_nav">
         <?php include "templates/nav_center.php"?>
     </nav>
-    <nav class="nav-bar">
-        <div class="logo">Ura quest <span>  Квест / Модули</span></div>
-        <div class="profile">
-            <i class="far fa-bell"></i>
-
-            <label class="menu-button-wrapper" for="">
-                <input type="checkbox" class="menu-button"><img src="assets/img/icons/images.jpeg"></input>
-                <div class="item-list">
-                    <h4><?= $_SESSION['user']['login'] ?></h4>
-                    <a href="vendor/logout.php">Выйти</a>
-                </div>
-            </label>
-        </div>
-    </nav>
+    
     <?php 
         $item_id;
         if(isset($_GET['id']))
@@ -57,7 +45,7 @@
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
         
-        $items_procent = mysqli_query($connect, "SELECT modules.id, modules.procent_complete,modules.completed,modules.not_completed, 
+        $items_procent = mysqli_query($connect, "SELECT modules.id,modules.name_module, modules.procent_complete,modules.completed,modules.not_completed, 
         COUNT(tasks.id_module) as count_tasks, SUM(tasks.status_task) as status_task from tasks INNER JOIN modules ON tasks.id_module=modules.id
         WHERE tasks.id_module=$item_id");
          
@@ -68,118 +56,105 @@
         $counter_error;
     ?>
             
-    <div class="merge_item">
-        <div class="item_left">
-            <h3>Статистика по модулю</h3>
-            <div class="chart-row three">
-            <?php
-            while($item=mysqli_fetch_assoc($items_procent))
-            {    
-                global $counter_module,$counter_success,$counter_error;
-                $counter_module = $item['completed'];
-                $counter_success = $item['procent_complete'];
-                $counter_error = $item['not_completed'];
-            ?>
-                        <div class="chart-container-wrapper">
-                            <div class="chart-container">
-                                <div class="chart-info-wrapper">
-                                    <h3>Модуль выполнен на:</h3>
-                                    <p>Считается общим счётом выполнения модуля</p>
-                                </div>
-                                <div class="chart-svg">
-                                    <svg viewBox="0 0 36 36" class="circular-chart blue">
-										<path class="circle-bg" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="<?=$item['completed']?>, 100" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="14" y="20.35" class="percentage counter-number"></text>
-                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
-									</svg>
-                                </div>
-                            </div>
-                        </div>
+<div class="merge_item">
+    <div class="item_left">
+    <h3>Информация по модулю</h3>
+    <div class="chart-row three">
+    <?php
+    while($item=mysqli_fetch_assoc($items_procent))
+    {    
+        global $counter_module,$counter_success,$counter_error;
+        $counter_module = $item['completed'];
+        $counter_success = $item['procent_complete'];
+        $counter_error = $item['not_completed'];
+    ?>
+    <div class="chart-container-wrapper">
+        <div class="chart-container">
+            
+        </div>
+    </div>
+    <div class="chart-container-wrapper">
+        <div class="chart-container">
+            <div class="chart-info-wrapper">
+                <h3>Модуль выполнен на:</h3>
+                <p>Считается общим счётом выполнения модуля</p>
+            </div>
+            <div class="chart-svg">
+                <svg viewBox="0 0 36 36" class="circular-chart blue">
+                    <path class="circle-bg" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="circle" stroke-dasharray="<?=$item['completed']?>, 100" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <text x="14" y="20.35" class="percentage counter-number"></text>
+                    <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-container-wrapper">
+        <div class="chart-container">
+            <div class="chart-info-wrapper">
+                <h3>Успеваемость по модулю:</h3>
+                <p>Если успеваемость достигает 50%, вы проиграли</p>
+            </div>
+            <div class="chart-svg">
+                <svg viewBox="0 0 36 36" class="circular-chart orange">
+                    <path class="circle-bg" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="circle" stroke-dasharray="<?=$item['procent_complete']?>, 100" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <text x="14" y="20.35" class="percentage counter-number-success"></text>
+                    <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-container-wrapper">
+        <div class="chart-container">
+            <div class="chart-info-wrapper">
+                <h3>Допущение ошибок:</h3>
+                <p>При проценте ошибок 60%, вы проиграли</p>
+            </div>
+            <div class="chart-svg">
+                <svg viewBox="0 0 36 36" class="circular-chart pink">
+                    <path class="circle-bg" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="circle" stroke-dasharray="<?=$item['not_completed']?>, 100" d="M18 2.0845
+    a 15.9155 15.9155 0 0 1 0 31.831
+    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <text x="14" y="20.35" class="percentage counter-number-error"></text>
+                    <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <script>
+        const counter = function(elem, delay, num) {
+        for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
+            (function(index) {
+            setTimeout(function() {
+                elem.textContent = index;
+                if(index == num) 
+                    num++;
+            }, delay*index);
+            })(currentIndex);
+        }
+        }
+        const counterNumber = document.getElementsByClassName('counter-number')[0];
+        counter(counterNumber, 10, <?=$counter_module;?>);
+        const counterNumber_success = document.getElementsByClassName('counter-number-success')[0];
+        counter(counterNumber_success, 10, <?=$counter_success;?>);
+        const counterNumber_error = document.getElementsByClassName('counter-number-error')[0];
+        counter(counterNumber_error, 10, <?=$counter_error;?>);
+    </script>
                         
-                        <div class="chart-container-wrapper">
-                            <div class="chart-container">
-                                <div class="chart-info-wrapper">
-                                    <h3>Успеваемость по модулю:</h3>
-                                    <p>Если успеваемость достигает 50%, вы проиграли</p>
-                                </div>
-                                <div class="chart-svg">
-                                    <svg viewBox="0 0 36 36" class="circular-chart orange">
-										<path class="circle-bg" d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="<?=$item['procent_complete']?>, 100" d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                                        <text x="14" y="20.35" class="percentage counter-number-success"></text>
-                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
-									</svg>
-                                </div>
-                            </div>
-                        </div>
-                       
-                        <div class="chart-container-wrapper">
-                            <div class="chart-container">
-                                <div class="chart-info-wrapper">
-                                    <h3>Допущение ошибок:</h3>
-                                    <p>При проценте ошибок 60%, вы проиграли</p>
-                                </div>
-                                <div class="chart-svg">
-                                    <svg viewBox="0 0 36 36" class="circular-chart pink">
-										<path class="circle-bg" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="<?=$item['not_completed']?>, 100" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                                        <text x="14" y="20.35" class="percentage counter-number-error"></text>
-                                        <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
-									</svg>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            const counter = function(elem, delay, num) {
-                            for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
-                                (function(index) {
-                                setTimeout(function() {
-                                    elem.textContent = index;
-                                    if(index == num) 
-                                        num++;
-                                }, delay*index);
-                                })(currentIndex);
-                            }
-                            }
-                            const counterNumber = document.getElementsByClassName('counter-number')[0];
-                            counter(counterNumber, 10, <?=$counter_module;?>);
-                            const counterNumber_success = document.getElementsByClassName('counter-number-success')[0];
-                            counter(counterNumber_success, 10, <?=$counter_success;?>);
-                            const counterNumber_error = document.getElementsByClassName('counter-number-error')[0];
-                            counter(counterNumber_error, 10, <?=$counter_error;?>);
-                        </script>
-                        <div class="chart-container-wrapper">
-                            <div class="chart-container">
-                                <div class="chart-info-wrapper">
-                                    <h3>Сколько всего прошло:</h3>
-                                    <p>Показывает какой процент игроков прошли дальше</p>
-                                </div>
-                                <div class="chart-svg">
-                                    <svg viewBox="0 0 36 36" class="circular-chart dont">
-										<path class="circle-bg" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<path class="circle" stroke-dasharray="30, 100" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-										<text x="18" y="20.35" class="percentage counter-number"></text>
-									</svg>
-                                </div>
-                            </div>
-                        </div>
         <?php
         }
         ?>
@@ -231,6 +206,21 @@
                 <script>
                  $(document).ready(function(){
                     $("#solve").val("");
+                    $('#lose').on('click', function(){
+                        one = $(".btn_task").val();
+                        two = "неверный результат";
+                        $.ajax({
+                            type: "POST",
+                            url: "vendor/execute_task.php",
+                            data: ({
+                                btn_task:one,
+                                answer_solve:two
+                            }),
+                            success: function(data){
+                                location.reload();  
+                            } 
+                        });
+                    });
                     $('#done').on('click', function(){
                         one = $(".btn_task").val();
                         two = $(".answer_solve").val();
@@ -267,9 +257,6 @@
                 }
                 ?>
              </div>
-
-            
-            
         </div>
     </div>
 
@@ -287,42 +274,12 @@
             <li></li>
         </ul>
     </div>
-    <script>
-        const counter = function(elem, delay, num) {
-        for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
-            (function(index) {
-            setTimeout(function() {
-                elem.textContent = index;
-                if(index == num) 
-                    num++;
-            }, delay*index);
-            })(currentIndex);
-        }
-        }
-        const counterNumber = document.getElementsByClassName('counter-number')[0];
-        counter(counterNumber, 10, <?=$counter_module;?>);
-        // $counter_module;
-        // $counter_success;
-        // $counter_error;
+    <script src="/assets/js/main.js">
     </script>
-    <script>
-        let button = document.querySelector('.button');
-        let buttonText = document.querySelector('.tick');
-
-        const tickMark = "<svg width=\"58\" height=\"45\" viewBox=\"0 0 58 45\" xmlns=\"http://www.w3.org/2000/svg\"><path fill=\"#fff\" fill-rule=\"nonzero\" d=\"M19.11 44.64L.27 25.81l5.66-5.66 13.18 13.18L52.07.38l5.65 5.65\"/></svg>";
-
-        buttonText.innerHTML = "Submit";
-
-        button.addEventListener('click', function() {
-
-            if (buttonText.innerHTML !== "Submit") {
-                buttonText.innerHTML = "Submit";
-            } else if (buttonText.innerHTML === "Submit") {
-                buttonText.innerHTML = tickMark;
-            }
-            this.classList.toggle('button__circle');
-        });
-    </script>
+    <div class="holder">
+        <div class="preloader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <script src="assets/js/preloader.js"></script>
 </body>
 
 </html>

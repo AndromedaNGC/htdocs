@@ -19,7 +19,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Sirin+Stencil&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/Components/back_authorization.css">
     <link rel="stylesheet" href="assets/css/Components/_news.css">
-    <link rel="stylesheet" href="assets/css/Components/btn_profile.css">
 </head>
 <body>
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>

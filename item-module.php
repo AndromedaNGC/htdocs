@@ -45,9 +45,9 @@
         tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
         modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
         
-        $items_procent = mysqli_query($connect, "SELECT modules.id,modules.name_module, modules.procent_complete,modules.completed,modules.not_completed, 
-        COUNT(tasks.id_module) as count_tasks, SUM(tasks.status_task) as status_task from tasks INNER JOIN modules ON tasks.id_module=modules.id
-        WHERE tasks.id_module=$item_id");
+        $items_procent = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module, modules.procent_complete,
+        modules.completed,modules.not_completed, tags.name_tag, COUNT(tasks.id_module) as count_tasks, SUM(tasks.status_task) as status_task 
+        from tasks INNER JOIN modules ON tasks.id_module=modules.id INNER JOIN tags ON modules.id_tags=tags.id WHERE tasks.id_module=$item_id");
          
         $items_1 = mysqli_query($connect, "SELECT modules.id,files.img_file,files.title_file,files.link,modules.status from 
         files inner join modules on files.id_module=modules.id where modules.id=$item_id");
@@ -69,8 +69,25 @@
         $counter_error = $item['not_completed'];
     ?>
     <div class="chart-container-wrapper">
-        <div class="chart-container">
-            
+        <div class="main-info-wrapper">
+            <div class="name-main-info">
+                <div class="name-module">
+                    <h3><?=$item['name_module']?></h3>
+                </div>
+                <div class="level-back">
+                    <a href="#" class="level">L<?=$item['level'];?></a>
+                    <a href="#" class="back-module"><img src="/assets/img/icons/tasks/task_back.png" alt="Назад"></a>
+                </div>
+            </div>
+            <div class="description-main-info">
+                <div class="main-for-award">
+                    <img src="/assets/img/icons/awards/award_baby.png">
+                </div>
+                <div class="main-for-description">
+                    <div class="main-description"><a href="#">Читать описание</a></div>
+                    <a href="#" class="main-tag">#<?=$item['name_tag']?><img src="/assets/img/icons/tasks/task_link.png" alt="link"></a>
+                </div>
+            </div>
         </div>
     </div>
     <div class="chart-container-wrapper">
@@ -171,7 +188,7 @@
                 <button class="btn_task" id="btn_task_id" onClick="document.getElementById('btn_task_id').value=<?=$item['id_tasks'];?>">
                     <div class="task">
                         <span><?=$item['title_task'];?></span>
-                        <img class="img_btn_task" src="assets/img/icons/files/<?=$item['status_img_task'];?>">
+                        <img class="img_btn_task" src="assets/img/icons/tasks/<?=$item['status_img_task'];?>">
                     </div>
                 </button>
             <?php

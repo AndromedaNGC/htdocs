@@ -49,9 +49,9 @@
                 $success = 100 - $error_task;
                 mysqli_query($connect, "UPDATE `modules` SET `completed`=$procent, `not_completed`=$error_task, `procent_complete`=$success  WHERE modules.id=".$item['id']."");
             ?>  
-                <div class="card">
+                <div class="card" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
                     <h3 class="title-module"><span>L<?=$item['level'];?></span><?=$item['name_module'];?></h3>
-                    <div class="card-info" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
+                    <div class="card-info">
                         <h4>Всего заданий: <span><?=$item['count_tasks']?></span></h4>
                         <div class="merge-circle"><p><div class="card-circle-green"></div>Выполнено: <span class="num-task"><?=$item['status_task'];?></span></p></div>  
                         <div class="merge-circle"><p><div class="card-circle-yellow"></div>Осталось: <span class="num-task"><?=$left?></span></p></div>

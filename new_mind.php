@@ -1,3 +1,10 @@
+<?php 
+    require "vendor/connect.php";
+    session_start();
+    if (!$_SESSION['user']) {
+        header('Location: /');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

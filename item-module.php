@@ -41,13 +41,14 @@
         if(isset($_GET['id']))
             $item_id = $_GET['id'];
         //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.question_task,
-        tasks.answer,modules.id,modules.level,modules.name_module,modules.num_of_task,modules.completed,
-        modules.not_completed,modules.procent_complete,modules.status from tasks inner join modules on tasks.id_module=modules.id where modules.id=$item_id");
-        
-        $items_procent = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module, modules.procent_complete,
-        modules.completed,modules.not_completed, tags.name_tag, COUNT(tasks.id_module) as count_tasks, SUM(tasks.status_task) as status_task 
-        from tasks INNER JOIN modules ON tasks.id_module=modules.id INNER JOIN tags ON modules.id_tags=tags.id WHERE tasks.id_module=$item_id");
+        $user_status = $_SESSION['user']['id'];
+        $items_procent = mysqli_query($connect, "SELECT user_tasks.id_task,user_tasks.id_player,user_tasks.img_status_task, tasks.id_module,
+        (SELECT COUNT(img_status_task) FROM user_tasks WHERE id_player=$user_status AND img_status_task='#E64C3C') as lose,
+        (SELECT COUNT(tasks.id) from tasks WHERE tasks.id_module=$item_id) as count_tasks,SUM(user_tasks.status_task) as status_task, 
+        modules.name_module, modules.level,modules.img_module,tags.name_tag,tags.tag_link
+        from user_tasks INNER JOIN tasks ON user_tasks.id_task=tasks.id INNER JOIN modules ON tasks.id_module=modules.id 
+        INNER JOIN tags ON modules.id_tags=tags.id
+        WHERE user_tasks.id_player=$user_status AND tasks.id_module=$item_id");
          
         $items_1 = mysqli_query($connect, "SELECT modules.id,files.img_file,files.title_file,files.link,modules.status from 
         files inner join modules on files.id_module=modules.id where modules.id=$item_id");
@@ -64,10 +65,19 @@
     while($item=mysqli_fetch_assoc($items_procent))
     {    
         global $counter_module,$counter_success,$counter_error;
-        $counter_module = $item['completed'];
-        $counter_success = $item['procent_complete'];
-        $counter_error = $item['not_completed'];
+        // $not_complete = 100 - $procent;
+        //$left = $item['count_tasks'] - $item['status_task'];
+        
+        $procent = (100 * $item['status_task'])/$item['count_tasks'];
+        $error_task = (100 * $item['lose'])/$item['count_tasks'];
+        $success = 100 - $error_task;
+        // $counter_module = $item['completed'];
+        // $counter_success = $item['procent_complete'];
+        // $counter_error = $item['not_completed'];
     ?>
+    <!-- <form class="dont" style="display: none;" method="post" action="quest.php">
+        <input name="hide_procent" type="text">
+    </form> -->
     <div class="chart-container-wrapper">
         <div class="main-info-wrapper">
             <div class="name-main-info">
@@ -75,17 +85,17 @@
                     <h3><?=$item['name_module']?></h3>
                 </div>
                 <div class="level-back">
-                    <a href="#" class="level">L<?=$item['level'];?></a>
-                    <a href="#" class="back-module"><img src="/assets/img/icons/tasks/task_back.png" alt="Назад"></a>
+                    <a href="#" class="level">L<?=$item['level']?></a>
+                    <a href="#" onclick="javascript:history.back(); return false;" class="back-module"><img src="/assets/img/icons/tasks/task_back.png" alt="Назад"></a>
                 </div>
             </div>
             <div class="description-main-info">
                 <div class="main-for-award">
-                    <img src="/assets/img/icons/awards/award_baby.png">
+                    <img src="/assets/img/icons/modules/<?=$item['img_module']?>">
                 </div>
                 <div class="main-for-description">
-                    <div class="main-description"><a href="#">Читать описание</a></div>
-                    <a href="#" class="main-tag">#<?=$item['name_tag']?><img src="/assets/img/icons/tasks/task_link.png" alt="link"></a>
+                    <div class="main-description"><a href="#">Сюжетная линия</a></div>
+                    <a target="_blank" href="<?=$item['tag_link']?>" class="main-tag">#<?=$item['name_tag']?><img src="/assets/img/icons/tasks/task_link.png" alt="link"></a>
                 </div>
             </div>
         </div>
@@ -101,10 +111,10 @@
                     <path class="circle-bg" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <path class="circle" stroke-dasharray="<?=$item['completed']?>, 100" d="M18 2.0845
+                    <path class="circle" stroke-dasharray="<?=$procent?>, 100" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <text x="14" y="20.35" class="percentage counter-number"></text>
+                    <text x="14" y="20.35" class="percentage counter-number"><?=$procent?></text>
                     <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
                 </svg>
             </div>
@@ -122,10 +132,10 @@
                     <path class="circle-bg" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <path class="circle" stroke-dasharray="<?=$item['procent_complete']?>, 100" d="M18 2.0845
+                    <path class="circle" stroke-dasharray="<?=$success?>, 100" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <text x="14" y="20.35" class="percentage counter-number-success"></text>
+                    <text x="14" y="20.35" class="percentage counter-number-success"><?=$success?></text>
                     <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
                 </svg>
             </div>
@@ -143,16 +153,17 @@
                     <path class="circle-bg" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <path class="circle" stroke-dasharray="<?=$item['not_completed']?>, 100" d="M18 2.0845
+                    <path class="circle" stroke-dasharray="<?=$error_task?>, 100" d="M18 2.0845
     a 15.9155 15.9155 0 0 1 0 31.831
     a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                    <text x="14" y="20.35" class="percentage counter-number-error"></text>
+                    <text x="14" y="20.35" class="percentage counter-number-error"><?=$error_task?></text>
                     <text x="24" y="20.35" class="percentage counter"><?="%"?></text>
                 </svg>
             </div>
         </div>
     </div>
     <script>
+        
         const counter = function(elem, delay, num) {
         for(let currentIndex=0; currentIndex<=num; currentIndex+=1) {
             (function(index) {
@@ -175,20 +186,23 @@
         <?php
         }
         ?>
-                    </div>
+        </div>
         </div>
         <div class="item_center">
             <h3>Задания</h3>
             <div class="item_center_task">
             
-            <?php 
+            <?php
+            $items = mysqli_query($connect, "SELECT tasks.id as id_tasks,tasks.name_task,
+            tasks.title_task,tasks.status_img_task,tasks.files_task,tasks.question_task,
+            tasks.answer,modules.id,modules.level,modules.name_module, modules.status from tasks inner join modules on 
+            tasks.id_module=modules.id where modules.id=$item_id");
             while($item=mysqli_fetch_assoc($items))
             {
             ?>  
                 <button class="btn_task" id="btn_task_id" onClick="document.getElementById('btn_task_id').value=<?=$item['id_tasks'];?>">
                     <div class="task">
                         <span><?=$item['title_task'];?></span>
-                        <img class="img_btn_task" src="assets/img/icons/tasks/<?=$item['status_img_task'];?>">
                     </div>
                 </button>
             <?php
@@ -209,8 +223,24 @@
                     });
                 });
             </script>
+            
             </div>
             <h3>Выполнение задания</h3>
+            <div class="up_lose_done_task">
+            <?php
+            $id_player = $_SESSION['user']['id'];
+            $item_done_lose = mysqli_query($connect,"SELECT user_tasks.id_player, user_tasks.id_task, user_tasks.img_status_task, tasks.title_task
+                                             FROM user_tasks INNER JOIN tasks ON user_tasks.id_task=tasks.id
+                                             WHERE user_tasks.id_player=$id_player AND tasks.id_module=$item_id ORDER BY tasks.title_task");
+                while($done_lose = mysqli_fetch_assoc($item_done_lose)){
+                ?>
+                    <div class="output_lose_done_tasks" style="color: <?=$done_lose['img_status_task']?>"><?=$done_lose['title_task']?></div>
+                <?php
+                }
+                
+                //header("Location: ../item-module.php");
+            ?>
+            </div>
             <div class="item_center_solve">
                 <div class="solve_task">
                     <h1 id="cost"></h1>
@@ -226,33 +256,43 @@
                     $('#lose').on('click', function(){
                         one = $(".btn_task").val();
                         two = "неверный результат";
-                        $.ajax({
-                            type: "POST",
-                            url: "vendor/execute_task.php",
-                            data: ({
-                                btn_task:one,
-                                answer_solve:two
-                            }),
-                            success: function(data){
-                                location.reload();  
-                            } 
-                        });
+                        three = <?=$item_id?>;
+                        for(var i=1; i<3; i++){
+                            $.ajax({
+                                type: "POST",
+                                url: "vendor/execute_task.php",
+                                data: ({
+                                    btn_task:one,
+                                    answer_solve:two,
+                                    module_id: three
+                                }),
+                                success: function(data){
+                                    //$('.up_lose_done_task').html(data); 
+                                    location.reload();
+                                } 
+                            });
+                        }
+                        return false;
                     });
                     $('#done').on('click', function(){
                         one = $(".btn_task").val();
                         two = $(".answer_solve").val();
-                        $.ajax({
-                            type: "POST",
-                            url: "vendor/execute_task.php",
-                            data: ({
-                                btn_task:one,
-                                answer_solve:two
-                            }),
-                            success: function(data){
-                                location.reload();
-                                
-                            } 
-                        });
+                        three = <?=$item_id?>;
+                        for(var i=1; i<3; i++){
+                            $.ajax({
+                                type: "POST",
+                                url: "vendor/execute_task.php",
+                                data: ({
+                                    btn_task:one,
+                                    answer_solve:two,
+                                    module_id: three
+                                }),
+                                success: function(data){
+                                    //$('.up_lose_done_task').html(data);
+                                    location.reload();
+                                } 
+                            });
+                        }
                         return false;
                     });
                 });
@@ -266,7 +306,7 @@
                 while($item=mysqli_fetch_assoc($items_1))
                 {
                 ?>  
-                    <a target="_blank" href="./assets/PDF/Modules/Module1/<?=$item['link']?>">
+                    <a target="_blank" href="./assets/Files/Modules/Module1/<?=$item['link']?>">
                         <img src="assets/img/icons/files/<?=$item['img_file']?>" alt="">
                         <p><?=$item['title_file']?></p>
                     </a>

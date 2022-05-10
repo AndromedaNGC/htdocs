@@ -30,38 +30,40 @@
     <div class="merge">
         <main class="modules">
         <?php 
+            $user_status = $_SESSION['user']['id'];
             //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $items = mysqli_query($connect, "SELECT modules.id,modules.level,modules.name_module, 
-            modules.procent_complete,modules.completed,modules.not_completed,tags.name_tag, COUNT(tasks.id_module) as count_tasks, 
-            SUM(tasks.status_task) as status_task,(SELECT COUNT(status_img_task) FROM tasks WHERE status_img_task='lose.png' 
-            AND tasks.id_module=modules.id) AS img_task from tasks 
-            INNER JOIN modules ON tasks.id_module=modules.id inner join tags on modules.id_tags=tags.id 
-            WHERE tasks.id_module=modules.id GROUP BY modules.id");
+            modules.img_module,tags.name_tag,tags.tag_link,COUNT(tasks.id) as count_tasks
+            FROM tasks INNER JOIN modules ON tasks.id_module=modules.id 
+            INNER JOIN tags ON modules.id_tags=tags.id GROUP BY modules.id");
             ?>
             
             <?php 
+            
             while($item=mysqli_fetch_assoc($items))
             {   
-                $left = $item['count_tasks'] - $item['status_task'];
-                $procent = (100 * $item['status_task'])/$item['count_tasks'];
-                $not_complete = 100 - $procent;
-                $error_task = (100 * $item['img_task'])/$item['count_tasks'];
-                $success = 100 - $error_task;
-                mysqli_query($connect, "UPDATE `modules` SET `completed`=$procent, `not_completed`=$error_task, `procent_complete`=$success  WHERE modules.id=".$item['id']."");
+                // $left = $item['count_tasks'] - $item['status_task'];
+                // $procent = (100 * $item['status_task'])/$item['count_tasks'];
+                // $not_complete = 100 - $procent;
+                //$error_task = (100 * $item['img_task'])/$item['count_tasks'];
+               // $success = 100 - $error_task;
             ?>  
-                <div class="card" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
-                    <h3 class="title-module"><span>L<?=$item['level'];?></span><?=$item['name_module'];?></h3>
-                    <div class="card-info">
-                        <h4>Всего заданий: <span><?=$item['count_tasks']?></span></h4>
-                        <div class="merge-circle"><p><div class="card-circle-green"></div>Выполнено: <span class="num-task"><?=$item['status_task'];?></span></p></div>  
-                        <div class="merge-circle"><p><div class="card-circle-yellow"></div>Осталось: <span class="num-task"><?=$left?></span></p></div>
+                <div class="card">
+                <div class="for_link" onClick="window.location='item-module.php?id=<?=$item['id'];?>'">
+                    <div class="card_up">
+                        <span class="level_count level_">L<?=$item['level'];?></span>
+                        <span class="level_count count_"><?=$item['count_tasks'];?></span>
+                    </div>
+                    <div class="card_middle">
+                        <img src="/assets/img/icons/modules/<?=$item['img_module']?>" alt="">
+                        <h3><?=$item['name_module']?></h3>
                         <p class="tag"><?=$item['name_tag']?></p>
-                        <div class="merge-right-left"><p>Завершено на:</p><span><?=$procent?>%</span></div>
                     </div>
-                    <div class="bar">
-                        <div class="emptybar"></div>
-                        <div class="filledbar" style="width: <?=$procent?>%"></div>
-                    </div>
+                </div>
+                <div class="card_down">
+                    <a target="_blank" href="<?=$item['tag_link']?>"><img src="/assets/img/icons/arrow_left.png" alt=""> <span>Link</span></a>
+                    <a><span>Plot</span> <img src="/assets/img/icons/arrow_right.png" alt=""></a>
+                </div>
                 </div>
         <?php
         }

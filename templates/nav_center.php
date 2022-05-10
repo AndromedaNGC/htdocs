@@ -1,3 +1,4 @@
+<?//=$_SESSION['user']['login'] ?>
 <nav id="menu">
     <div class="menu-item">
     <div class="menu-text">
@@ -103,22 +104,70 @@
 </nav>
 <nav class="nav-bar">
     <div class="logo">Ura quest <span>  Квест / Модули</span></div>
-    <div class="profile">
-        <i class="far fa-bell"></i>
-
+    <div class="profile" onClick="window.location='../profile_world/index.html'">
+        <p class="profile_name_nav"><?= $_SESSION['user']['login'] ?></p>
+    
         <div class="menu-button-wrapper">
-            <a href="#demo-modal"><img src="assets/img/icons/images.jpeg"></a>
+            <a><img src="assets/img/icons/images.jpeg"></a>
         </div>
 
     </div>
     
 </nav>
-<div id="demo-modal" class="modal_con">
+<!-- <div id="demo-modal" class="modal_con">
     <div class="modal__content">
         <div class="item-list">
-            <h4><?= $_SESSION['user']['login'] ?></h4>
-            <a href="vendor/logout.php">Выйти</a>
+            <div class="modal-container">
+                <input type="radio" id="tab1" name="tab">
+                <label class="profile-delete" for="tab1"><img src="/assets/img/profile/del_account.png" alt=""></label>
+                <input type="radio" id="tab2" name="tab" checked>
+                <label class="profile-header" for="tab2">Профиль игрока</label>
+                <div class="modal-content-container">
+                    <div class="modal-content" id="c1">
+                        <div class="profile-leave-always">
+                            <img src="/assets/img/profile/cry_for_leave.png" alt="">
+                            <p>Неужели вы решили покинуть нас на всегда?</p>
+                            <button class="profile-leave-always-yes">Да, удалить мой аккаунт</button>
+                            <button class="profile-leave-always-no">Нет, я хочу остаться</button>
+                        </div>
+                    </div>
+                    <div class="modal-content" id="c2">
+                        <form class="profile-main-info">
+                            <button class="btn-info-img"><img src="/assets/img/profile/avatar/1024x768-72898-astronaut-artist-artwork-digital-art-hd-4k.jpg" alt=""></button>
+                            <h4></h4>
+                            <input type="email" class="profile-input-first" placeholder="astronetngc3372@gmail.com">
+                            <div class="date-birth">
+                                <input type="text" placeholder="03.11.2001">
+                                <input type="text" placeholder="19">
+                            </div>
+                            <div class="profile-status"><span>Статус:</span>Начинающий</div>
+                            <div class="profile-exit-change-data">
+                                <button class="profile-exit"><a href="vendor/logout.php">Выйти</a></button>
+                                <button class="profile-change-data">Изменить</button>
+                            </div>
+                            
+                        </form>
+                        <div class="profile-other-info">
+                            <div class="profile-about-info">
+                                <h3>О себе</h3>
+                                <textarea name="about-info" cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="profile-tegs">
+                                <h3>Теги</h3>
+                            </div>
+                            <form class="profile-change-password">
+                                <h3>Изменение пароля</h3>
+                                <div class="merge-change-password">
+                                    <input type="password" placeholder="Старый пароль...">
+                                    <input type="password" placeholder="Новый пароль...">
+                                    <button>Изменить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <a href="#" class="modal__close">&times;</a>
     </div>
-</div>
+</div> -->

@@ -18,6 +18,7 @@
     --draft-bg: #fed8b3;
     --draft-icon: #e9780e;
     --gray-links: #b2b2b2;
+    --black-bg: #000000;
 }
 .merge_item{
     display: flex;
@@ -81,7 +82,7 @@
     margin-right: 20px;
 }
 .item_center_task{
-    height: 170px;
+    height: 100px;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 30px;
@@ -92,7 +93,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--app-bg-dark);
-    width: 120px;
+    width: 70px;
     height: 60px;
     border-radius: 10px;
     font-size: 30px;
@@ -105,18 +106,13 @@
     transform: scale(1.1);
     transition: all 0.4s;
 }
-.task img{
-    width: 35px;
-    height: 35px;
-    margin-right: 20px;
-}
 .task span{
-    margin-left: 20px;
+    margin-left: 15px;
     font-weight: 500;
 }
 .btn_task{
     background-color: var(--app-bg-dark);
-    width: 120px;
+    width: 70px;
     height: 60px;
     border-radius: 10px;
     color: #eee;
@@ -131,6 +127,20 @@
     height: 450px;
     border-radius: 10px;
     background-color: var(--app-bg-dark);
+}
+.up_lose_done_task{
+    width: 100%;
+    display: flex;
+    font-size: 25px;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
+}
+.output_lose_done_tasks{
+    padding: 7px 14px;
+    background-color: var(--black-bg);
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-bottom: 20px;
 }
 .for_solve{
     position: absolute;
@@ -481,13 +491,13 @@ button {
 
 .main-tag {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 40px;
-    padding: 0 34px;
 }
 
 .main-tag img {
+    margin-left: 10px;
     width: 20px;
     height: 21px;
 }

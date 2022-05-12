@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="assets/css/Components/reg_auth.css">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color: #100E17;">
     <div class="context" id="open-context">
         <h1>Ura quest</h1>
         <p class="text">Приветствуем тебя на нашем квесте, в котором ты сможешь применить собственные

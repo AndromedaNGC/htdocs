@@ -104,7 +104,7 @@
 </nav>
 <nav class="nav-bar">
     <div class="logo">Ura quest <span>  Квест / Модули</span></div>
-    <div class="profile" onClick="window.location='../profile_world/index.html'">
+    <div class="profile" onClick="window.location='../profile_world/index_prof.php'">
         <p class="profile_name_nav"><?= $_SESSION['user']['login'] ?></p>
     
         <div class="menu-button-wrapper">

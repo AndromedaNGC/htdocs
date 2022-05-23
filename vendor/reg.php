@@ -11,13 +11,13 @@
         if ($password === $password_confirm) {
 
             $check_login = mysqli_query($connect, "SELECT 'login' FROM `Players` WHERE `login` = '$login'");
-            $check_email = mysqli_query($connect, "SELECT 'e-mail' FROM `Players` WHERE `e-mail` = '$email'");
+            $check_email = mysqli_query($connect, "SELECT 'email' FROM `Players` WHERE `email` = '$email'");
             if (mysqli_num_rows($check_login) < 1) {
                 if (mysqli_num_rows($check_email) < 1) {
 
                     $password = md5($password);
 
-                    mysqli_query($connect, "INSERT INTO `Players` (`id`, `login`, `e-mail`, `password`) VALUES (NULL, '$login', '$email', '$password')");
+                    mysqli_query($connect, "INSERT INTO `Players` (`id`, `avatar`, `login`, `email`, `password`, `birthday`, `id_status_player`, `about_player`) VALUES (NULL, 'uploads/default.jpg', '$login', '$email', '$password', '1999-01-01',1,'about me')");
                     $_SESSION['message'] = 'Регистрация прошла успешно. Авторизуйтесь!';
                     header('Location: ../index.php');
                 } else {

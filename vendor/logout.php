@@ -1,4 +1,6 @@
 <?php
 session_start();
-unset($_SESSION['user']);
-header('Location: ../index.php');
+for($i=1; $i<3; $i++){
+    unset($_SESSION['user']);
+    header('Location: ../index.php');
+}

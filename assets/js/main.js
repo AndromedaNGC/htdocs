@@ -102,3 +102,6 @@ button.addEventListener('click', function() {
 	}
 	this.classList.toggle('button__circle');
 });
+
+
+// FILTER

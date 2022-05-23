@@ -20,16 +20,16 @@
             $user = mysqli_fetch_assoc($check_user);
             $password = md5($password);
             mysqli_query($connect, "UPDATE `Players` SET `password`='$password' WHERE `id`='$user'")or die(mysqli_error($connect));
-            $_SESSION['message'] = 'Пароль успешно изменен';
+            $_SESSION['msg'] = 'Пароль успешно изменен';
             header('Location: ../profile_world/index_prof.php');
            
         } else {
-            $_SESSION['message'] = 'Старый пароль не совпадает';
+            $_SESSION['msg'] = 'Старый пароль не совпадает';
             header('Location: ../profile_world/index_prof.php');
         }
 
     } else {
-        $_SESSION['message'] = 'Пароль должен содержать не менее восьми знаков, включать буквы, цифры и специальные символы'; 
+        $_SESSION['msg'] = 'Неверно введены данные'; 
         header('Location: ../profile_world/index_prof.php');
     }
     }
@@ -37,7 +37,7 @@
 
     }else{
         mysqli_query($connect, "UPDATE `Players` SET `about_player`='$about' WHERE `id`='$user'")or die(mysqli_error($connect));
-        $_SESSION['message'] = 'Информация о себе изменена';
+        $_SESSION['msg'] = 'Информация о себе изменена';
         header('Location: ../profile_world/index_prof.php');
     }
     
@@ -45,7 +45,7 @@
 
     }else{
         mysqli_query($connect, "UPDATE `Players` SET `birthday`='$input_date' WHERE `id`='$user'")or die(mysqli_error($connect));
-        $_SESSION['message'] = 'Информация о себе изменена';
+        $_SESSION['msg'] = 'Информация о себе изменена';
         header('Location: ../profile_world/index_prof.php');
     }
 
@@ -55,10 +55,10 @@
         $check_login = mysqli_query($connect, "SELECT 'login' FROM `Players` WHERE `login` = '$login'");
         if (mysqli_num_rows($check_login) < 1) {
             mysqli_query($connect, "UPDATE `Players` SET `login`='$login' WHERE `id`='$user'")or die(mysqli_error($connect));
-            $_SESSION['message'] = 'Информация о себе изменена';
+            $_SESSION['msg'] = 'Информация о себе изменена';
             header('Location: ../profile_world/index_prof.php');
         } else {
-            $_SESSION['message'] = 'Неверно введены данные';
+            $_SESSION['msg'] = 'Неверно введены данные';
             header('Location: ../profile_world/index_prof.php');
         }
         
@@ -70,13 +70,31 @@
         $check_email = mysqli_query($connect, "SELECT 'email' FROM `Players` WHERE `login` = '$login'");
         if (mysqli_num_rows($check_email) < 1) {
             mysqli_query($connect, "UPDATE `Players` SET `email`='$email' WHERE `id`='$user'")or die(mysqli_error($connect));
-            $_SESSION['message'] = 'Информация о себе изменена';
+            $_SESSION['msg'] = 'Информация о себе изменена';
             header('Location: ../profile_world/index_prof.php');
         } else {
-            $_SESSION['message'] = 'Неверно введены данные';
+            $_SESSION['msg'] = 'Неверно введены данные';
             header('Location: ../profile_world/index_prof.php');
         }
         
+    }
+    $file_img = $_FILES['avatar']['name'];
+    if(empty($file_img)){
+
+    }else{
+        $path = 'uploads/' . time() . $_FILES['avatar']['name'];
+        if (!move_uploaded_file($_FILES['avatar']['tmp_name'], '../' . $path)) {
+            $_SESSION['msg'] = 'Фото пользователя не выбрана';
+            header('Location: ../profile_world/index_prof.php');
+        }
+        mysqli_query($connect, "UPDATE `Players` SET `avatar`='$path' WHERE `id`='$user'")or die(mysqli_error($connect));
+        $_SESSION['msg'] = 'Информация о себе изменена';
+        header('Location: ../profile_world/index_prof.php');
+    }
+
+    if(empty($login) and empty($email) and empty($password) and empty($about) and empty($input_date) and empty($file_img)){
+        $_SESSION['msg'] = 'Все поля были пустыми';
+        header('Location: ../profile_world/index_prof.php');
     }
 ?>    
     

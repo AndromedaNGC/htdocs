@@ -22,8 +22,13 @@
   margin: 10px auto;
 }
 
-.hire button{
+.hire a{
   margin: 0 auto;
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 500;
   width: 110px;
   border: 0;
   border-radius: 10px;
@@ -183,6 +188,18 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+@-webkit-keyframes progress {
+  0% {
+      stroke-dasharray: 0 100;
+  }
+}
+
+@keyframes progress {
+  0% {
+      stroke-dasharray: 0 100;
+  }
+}
+
 .about--banner p{
     font-size: 16px;
     width: 70%;
@@ -195,6 +212,7 @@
 .contact--lockup > .modal h2{
     margin-right: 270px;
     margin-top:100px;
+    margin-bottom: 30px;
     font-size:28px;
     font-weight:900;
     line-height:1;
@@ -202,7 +220,7 @@
 }
 
 .modal form{
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 input,
@@ -312,7 +330,34 @@ input[type="submit"] {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
 }
-
+.btn-tertiary{
+	color:#999;
+	line-height:30px;
+	margin:15px 0;
+	display:block;
+}
+.btn-tertiary:hover,
+.btn-tertiary:focus{
+	color:#888;
+}
+.datepicker-navigation h3{
+  text-align: center;
+}
+.input-file{
+	width:.1px;
+	height:.1px;
+	opacity:0;
+	overflow:hidden;
+	position:absolute;
+	z-index:-1
+}
+.input-file + .js-labelFile{
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	padding:0 10px;
+	cursor:pointer
+}
 /* ВЫБОРКА ДАТЫ РОЖДЕНИЯ */
 
 .calendar{
@@ -681,6 +726,8 @@ fieldset .label_date ~ label {
 .datepicker-navigation h3, .datepicker-navigation a {
   margin: 0 auto;
   padding: 0;
+  display: flex;
+  justify-content: center;
   line-height: 1.5;
   text-align: center;
   border-radius: 0.3rem;
@@ -1063,4 +1110,117 @@ fieldset .label_date ~ label {
 }
 .datepicker .settings label input:focus, .datepicker .settings label input:checked, .datepicker .day label input:focus, .datepicker .day label input:checked {
   background-color: #109899;
+}
+
+/* Награды======================================================== */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #482300;
+  border-radius: 10px;
+}
+
+.work--lockup{
+  z-index: 99999;
+  overflow-y: scroll;
+}
+
+.container_award {
+  flex-grow: 1;
+  max-width: 960px;
+  max-height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.cards_award {
+  display: grid;
+  grid-template-columns: repeat(4, 0.5fr);
+  grid-gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cards__item {
+  height: 250px;
+  width: 200px;
+  border-radius: 10px;
+}
+
+.card_award {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.card__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card__picture {
+  margin-bottom: 12px;
+}
+.card__picture img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.card__title {
+  margin: 0;
+  width: 200px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card__content {
+  z-index: 1;
+  padding: 20px;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: 0s;
+}
+.card__overlay:hover ~ .card__content {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.2s 0.3s;
+}
+.card__content h2 {
+  margin: 0;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.card__frame p{
+  padding: 10px 0;
+  color: #b6b6b6;
+  width: 190;
 }

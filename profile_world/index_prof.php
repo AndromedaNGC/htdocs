@@ -12,6 +12,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="/assets/img/icons/menu/play.svg" type="image/x-icon">
   <link rel="stylesheet" href="../assets/css/Components/preloader.css">
   <link rel="stylesheet" href="../assets/css/Components/back_animation.css">
   <link rel="stylesheet" href="assets/css/main.css">
@@ -55,7 +56,7 @@
                 <div class="banner_container">  
                   <div class="intro_banner_container">
                     <div class="btn-info-img">
-                      <img src="/profile_world/assets/img/avatars/avatar1.jpg" alt="">
+                      <img src="../<?=$item['avatar']?>" alt="">
                     </div>
                     <div class="inner">
                       <h1><?=$item['login']?></h1>
@@ -64,7 +65,7 @@
                   </div>
                   <div class="info_profile_home">
                     <h3><?=$item['email']?></h3>
-                    <h3>Дата рождения: 03.11.2001</h3>
+                    <h3>Дата рождения: <?=$item['birthday']?></h3>
                   </div>
                 </div>
                 <?php
@@ -181,52 +182,28 @@
             <div class="work">
               <h2>Ваши достижения</h2>
               <div class="work--lockup">
-                <ul class="slider">
-                  <li class="slider--item slider--item-left">
-                    <a href="#0">
-                      <div class="slider--item-image">
-                        <img src="assets/img/awards/award1.jpg" alt="Victory">
+                <div class="container_award">
+                  <ul class="cards_award">
+                  <?php 
+                    $award_user = mysqli_query($connect,"SELECT user_awards.id_user,awards.award_description, awards.award_img_link,awards.award_title 
+                    FROM user_awards INNER JOIN Players ON user_awards.id_user=Players.id
+                    INNER JOIN awards ON user_awards.id_award=awards.id WHERE user_awards.id_user=$user");
+                    while($item=mysqli_fetch_assoc($award_user)){ 
+                  ?>
+                    <li class="card_award cards__item">
+                      <div class="card__frame">
+                        <div class="card__picture">
+                          <img src="assets/img/awards/<?=$item['award_img_link']?>" alt="Victory">  
+                        </div>
+                        <h4 class="card__title"><?=$item['award_title']?></h4>
+                        <p><?=$item['award_description']?></p>
                       </div>
-                      <p class="slider--item-title">Первая победа</p>
-                      <p class="slider--item-description">Легенда гласит, что мир без побед не бывает</p>
-                    </a>
-                  </li>
-                  <li class="slider--item slider--item-center">
-                    <a href="#0">
-                      <div class="slider--item-image">
-                        <img src="assets/img/awards/award2.jpg" alt="Metiew and Smith">
-                      </div>
-                      <p class="slider--item-title">Алгоритм начала</p>
-                      <p class="slider--item-description">Если не существет алгоритма, то не сущетвует и логики</p>
-                    </a>
-                  </li>
-                  <li class="slider--item slider--item-right">
-                    <a href="#0">
-                      <div class="slider--item-image">
-                        <img src="assets/img/awards/award3.jpg" alt="Alex Nowak">
-                      </div>
-                      <p class="slider--item-title">Многозадачность</p>
-                      <p class="slider--item-description">Без многозадачности, не сможешь достойно пройти квест</p>
-                    </a>
-                  </li>
-                </ul>
-                <div class="slider--prev">
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                  viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-                    <path d="M561,1169C525,1155,10,640,3,612c-3-13,1-36,8-52c8-15,134-145,281-289C527,41,562,10,590,10c22,0,41,9,61,29
-                    c55,55,49,64-163,278L296,510h575c564,0,576,0,597,20c46,43,37,109-18,137c-19,10-159,13-590,13l-565,1l182,180
-                    c101,99,187,188,193,199c16,30,12,57-12,84C631,1174,595,1183,561,1169z"/>
-                  </g>
-                  </svg>
-                </div>
-                <div class="slider--next">
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 150 118" style="enable-background:new 0 0 150 118;" xml:space="preserve">
-                  <g transform="translate(0.000000,118.000000) scale(0.100000,-0.100000)">
-                    <path d="M870,1167c-34-17-55-57-46-90c3-15,81-100,194-211l187-185l-565-1c-431,0-571-3-590-13c-55-28-64-94-18-137c21-20,33-20,597-20h575l-192-193C800,103,794,94,849,39c20-20,39-29,61-29c28,0,63,30,298,262c147,144,272,271,279,282c30,51,23,60-219,304C947,1180,926,1196,870,1167z"/>
-                  </g>
-                  </svg>
-                </div>
+                    </li>
+                  <?php
+                    }
+                  ?>
+                  </ul>
+                  </div>
               </div>
             </div>
           </li>
@@ -244,7 +221,27 @@
               <div class="contact--lockup">
                 <div class="modal">
                   <h2>Изменение данных</h2>
-                  <form action="../vendor/update.php" method="POST">
+                  
+                  <form action="../vendor/update.php" method="POST" enctype="multipart/form-data">
+                  <div class="form-group" style="width: 284px;">
+                    <input type="file" name="avatar" id="file" class="input-file">
+                    <label for="file" class="btn btn-tertiary js-labelFile">
+                    <span class="js-fileName" style="font-size: 16px;">Загрузить фото профиля</span>
+                    </label>
+                  </div>
+                  <script>  
+                    $('.input-file').each(function() {
+                      var $input = $(this),
+                        $label = $input.next('.js-labelFile'),
+                        labelVal = $label.html();
+                        
+                      $input.on('change', function(element) {
+                      var fileName = '';
+                      if (element.target.value) fileName = element.target.value.split('\\').pop();
+                      fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+                      });
+                    });
+                  </script>
                     <input type="text" name="login" class="question" id="nme" autocomplete="off" />
                     <label for="nme"><span>Логин</span></label>
                     <input type="text" name="email" class="question" id="emal" autocomplete="off" />
@@ -313,6 +310,12 @@
                     <label for="nme"><span>Новый пароль</span></label>
                     <input type="submit" value="Изменить" />
                   </form>
+                  <?php
+                    if (isset($_SESSION['msg'])) {
+                      echo '<p style="color: darkorange;" class="error_msg"> ' . $_SESSION['msg'] . ' </p>';
+                    }
+                    unset($_SESSION['msg']);
+                  ?>
               </div>
             </div>
           </li>
@@ -321,7 +324,7 @@
               <h2>Неужели вы покидаете нас?</h2>
               <!-- checkout formspree.io for easy form setup -->
               <img src="/profile_world/assets/img/goodbuy.png" alt="">
-              <button>Удалить</button>
+              <a href="../vendor/delete_user.php">Удалить</a>
             </div>
           </li>
         </ul>

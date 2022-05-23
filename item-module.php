@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/assets/img/icons/menu/play.svg" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -33,7 +34,10 @@
 <body>
     <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
     <nav class="main_nav">
-        <?php include "templates/nav_center.php"?>
+        <?php 
+        $head = "Задания модуля";
+        include "templates/nav_center.php";
+        ?>
     </nav>
     
     <?php 
@@ -65,19 +69,12 @@
     while($item=mysqli_fetch_assoc($items_procent))
     {    
         global $counter_module,$counter_success,$counter_error;
-        // $not_complete = 100 - $procent;
-        //$left = $item['count_tasks'] - $item['status_task'];
-        
+      
         $procent = (100 * $item['status_task'])/$item['count_tasks'];
         $error_task = (100 * $item['lose'])/$item['count_tasks'];
         $success = 100 - $error_task;
-        // $counter_module = $item['completed'];
-        // $counter_success = $item['procent_complete'];
-        // $counter_error = $item['not_completed'];
     ?>
-    <!-- <form class="dont" style="display: none;" method="post" action="quest.php">
-        <input name="hide_procent" type="text">
-    </form> -->
+    
     <div class="chart-container-wrapper">
         <div class="main-info-wrapper">
             <div class="name-main-info">

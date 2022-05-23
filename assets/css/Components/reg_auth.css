@@ -1,423 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Ubuntu:wght@300;400&display=swap');
-
-*,
-*:before,
-*:after {
+body{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-button{
-    border: 0px;
-    text-transform: uppercase;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-.merge_reg_auth{
-    display: flex;
-    justify-content: center;
-}
-.error_message{
-  color: rgb(250, 112, 0);
-  text-align: center;
-  margin-top: 10px;
-  font-family: 'Ubuntu', sans-serif;
-}
-#mainButton_reg {
-  color: #999999;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  text-align: center;
-  font-weight: 200;
-  overflow: hidden;
-  position: relative;
-  border-radius: 2px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  background-color: transparent;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  -ms-transition: all 0.2s ease-in;
-  -o-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-  border-radius: 10px;
-}
-#mainButton_reg{
-    width: 200px;
-}
-#mainButton_login{
-    width: 150px;
-}
-#mainButton_reg .btn-text_reg {
-  z-index: 2;
-  display: block;
-  padding: 10px 20px;
-  position: relative;
-  font-family: 'Ubuntu', sans-serif;
-}
-#mainButton_reg .btn-text_reg:hover {
-  cursor: pointer;
-}
-#mainButton_reg:after {
-  top: -50%;
-  z-index: 1;
-  content: "";
-  width: 150%;
-  height: 200%;
-  position: absolute;
-  left: calc(-150% - 40px);
-  background-color: #5900ff33;
-  -webkit-tse-in, backgroorm: skewX(-40deg);
-  transform: skewX(-40deg);
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  -ms-transition: all 0.2s ease-out;
-  -o-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
-}
-#mainButton_reg:hover {
-  cursor: default;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.10), 0 6px 6px rgba(0, 0, 0, 0.10);
-}
-#mainButton_reg:hover:after {
-  -webkit-transform: translateX(100%) skewX(-30deg);
-  -moz-transform: translateX(100%) skewX(-30deg);
-  -ms-transform: translateX(100%) skewX(-30deg);
-  -o-transform: translateX(100%) skewX(-30deg);
-  transform: translateX(100%) skewX(-30deg);
-}
-#mainButton_reg.active_reg {
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-}
-#mainButton_reg.active_reg .modal_reg {
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  transform: scale(1, 1);
-  font-family: 'Ubuntu', sans-serif;
-}
-#mainButton_reg.active_reg .modal_reg {
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-#mainButton_reg .modal_reg {
-  top: 25%;
-  left: 25%;
-  border-radius: 15px;
-  z-index: 3;
-  width: 50%;
-  height: 50%;
-  padding: 20px;
-  display: flex;
-  position: fixed;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: inherit;
-  transform-origin: center center;
-  background: #17141d;
-  -webkit-transform: scale(0.000001, 0.00001);
-  -moz-transform: scale(0.000001, 0.00001);
-  -ms-transform: scale(0.000001, 0.00001);
-  -o-transform: scale(0.000001, 0.00001);
-  transform: scale(0.000001, 0.00001);
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  -ms-transition: all 0.2s ease-in;
-  -o-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-}
-.close-button_reg {
-  top: 20px;
-  right: 20px;
-  position: absolute;
-  -webkit-transition: opacity 0.2s ease-in;
-  -moz-transition: opacity 0.2s ease-in;
-  -ms-transition: opacity 0.2s ease-in;
-  -o-transition: opacity 0.2s ease-in;
-  transition: opacity 0.2s ease-in;
-}
-.close-button_reg:hover {
-  opacity: 0.5;
-  cursor: pointer;
-}
-
-.form-title_reg {
-  margin-bottom: 15px;
-}
-
-.form-button_reg {
-    width: 100%;
-    padding: 10px;
-    color: #000;
-    margin-top: 10px;
-    width: 200px;
-    text-transform: uppercase;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #eee;
-    -webkit-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -moz-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -ms-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -o-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    transition: color 0.2s ease-in, background-color 0.2s ease-in;
-}
-.form-button_reg:hover {
-  color: white;
-  cursor: pointer;
   background-color: #000;
 }
-
-.input-group_reg {
+.main{
   width: 100%;
-  font-size: 16px;
-  max-width: 400px;
-  padding-top: 20px;
-  position: relative;
-  margin-bottom: 15px;
+  height: 100vh;
+  background-image: url(/assets/index.jpg);
+  background-size: cover;
+  display: flex;
+  align-items: center;
 }
-.input-group_reg input {
-  width: 100%;
-  color: #999;
-  border: none;
-  outline: none;
-  padding: 5px 0;
-  line-height: 1;
-  font-size: 20px;
-  border-bottom: solid 1px #999999;
-  background-color: transparent;
-  -webkit-transition: box-shadow 0.2s ease-in;
-  -moz-transition: box-shadow 0.2s ease-in;
-  -ms-transition: box-shadow 0.2s ease-in;
-  -o-transition: box-shadow 0.2s ease-in;
-  transition: box-shadow 0.2s ease-in;
-}
-.input-group_reg input + label {
-  left: 0;
-  top: 20px;
-  position: absolute;
-  pointer-events: none;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  -ms-transition: all 0.2s ease-in;
-  -o-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-}
-.input-group_reg input:focus {
-  box-shadow: 0 1px 0 0 white;
-}
-.input-group_reg input:focus + label, .input-group_reg input.active_reg + label {
-  font-size: 12px;
-  -webkit-transform: translateY(-20px);
-  -moz-transform: translateY(-20px);
-  -ms-transform: translateY(-20px);
-  -o-transform: translateY(-20px);
-  transform: translateY(-20px);
-}
-
-
-
-
-
-
-
-
-
-
-#mainButton_log {
-    color: #999999;
-    border: none;
-    outline: none;
-    font-size: 18px;
-    text-align: center;
-    font-weight: 200;
-    overflow: hidden;
-    position: relative;
-    border-radius: 2px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background-color: transparent;
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    -ms-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-    border-radius: 10px;
+button{
+    border: 0px;
     font-family: 'Ubuntu', sans-serif;
-  }
-  #mainButton_log .btn-text_log {
-    z-index: 2;
-    display: block;
-    padding: 10px 20px;
-    position: relative;
-  }
-  #mainButton_log .btn-text_log:hover {
-    cursor: pointer;
-  }
-  #mainButton_log:after {
-    top: -50%;
-    z-index: 1;
-    content: "";
-    width: 150%;
-    height: 200%;
-    position: absolute;
-    left: calc(-150% - 40px);
-    background-color: rgba(255, 255, 255, 0.2);
-    -webkit-transform: skewX(-40deg);
-    -moz-transform: skewX(-40deg);
-    -ms-transform: skewX(-40deg);
-    -o-transform: skewX(-40deg);
-    transform: skewX(-40deg);
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -ms-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-  }
-  #mainButton_log:hover {
-    cursor: default;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  }
-  #mainButton_log:hover:after {
-    -webkit-transform: translateX(100%) skewX(-30deg);
-    -moz-transform: translateX(100%) skewX(-30deg);
-    -ms-transform: translateX(100%) skewX(-30deg);
-    -o-transform: translateX(100%) skewX(-30deg);
-    transform: translateX(100%) skewX(-30deg);
-  }
-  #mainButton_log.active_log {
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-  }
-  #mainButton_log.active_log .modal_log {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-  #mainButton_log.active_log .modal_log {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1);
-  }
-  #mainButton_log .modal_log {
-    top: 25%;
-    left: 25%;
-    border-radius: 15px;
-    z-index: 3;
-    width: 50%;
-    height: 50%;
-    padding: 20px;
-    display: flex;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: inherit;
-    transform-origin: center center;
-    background: #17141d;
-    -webkit-transform: scale(0.000001, 0.00001);
-    -moz-transform: scale(0.000001, 0.00001);
-    -ms-transform: scale(0.000001, 0.00001);
-    -o-transform: scale(0.000001, 0.00001);
-    transform: scale(0.000001, 0.00001);
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    -ms-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-  }
-  .close-button_log {
-    top: 20px;
-    right: 20px;
-    position: absolute;
-    -webkit-transition: opacity 0.2s ease-in;
-    -moz-transition: opacity 0.2s ease-in;
-    -ms-transition: opacity 0.2s ease-in;
-    -o-transition: opacity 0.2s ease-in;
-    transition: opacity 0.2s ease-in;
-  }
-  .close-button_log:hover {
-    opacity: 0.5;
-    cursor: pointer;
-  }
-  
-  .form-title_log {
-    margin-bottom: 15px;
-  }
-  
-  .form-button_log {
-    width: 100%;
-    padding: 10px;
-    color: #000;
-    margin-top: 10px;
-    width: 150px;
-    text-align: center;
-    border-radius: 10px;
-    background-color: #eee;
-    -webkit-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -moz-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -ms-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    -o-transition: color 0.2s ease-in, background-color 0.2s ease-in;
-    transition: color 0.2s ease-in, background-color 0.2s ease-in;
-  }
-  .form-button_log:hover {
-    color: #fff;
-    cursor: pointer;
-    background-color: #000;
-  }
-  
-  .input-group_log {
-    width: 100%;
-    font-size: 16px;
-    max-width: 400px;
-    padding-top: 20px;
-    position: relative;
-    margin-bottom: 15px;
-  }
-  .input-group_log input {
-    width: 100%;
-    color: #999;
-    border: none;
-    outline: none;
-    padding: 5px 0;
-    line-height: 1;
-    font-size: 20px;
-    border-bottom: solid 1px #999999;
-    background-color: transparent;
-    -webkit-transition: box-shadow 0.2s ease-in;
-    -moz-transition: box-shadow 0.2s ease-in;
-    -ms-transition: box-shadow 0.2s ease-in;
-    -o-transition: box-shadow 0.2s ease-in;
-    transition: box-shadow 0.2s ease-in;
-  }
-  .input-group_log input + label {
-    left: 0;
-    top: 20px;
-    position: absolute;
-    pointer-events: none;
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    -ms-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-  }
-  .input-group_log input:focus {
-    box-shadow: 0 1px 0 0 white;
-  }
-  .input-group_log input:focus + label, .input-group_log input.active_log + label {
-    font-size: 12px;
-    -webkit-transform: translateY(-20px);
-    -moz-transform: translateY(-20px);
-    -ms-transform: translateY(-20px);
-    -o-transform: translateY(-20px);
-    transform: translateY(-20px);
-  }
+}
+
+.login-page {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form span{
+  color: #FD5B00;
+  font-size: 24px;
+  font-family: 'Montserrat', sans-serif;
+  float: left;
+  margin-bottom: 20px;
+}
+h3{
+  color: #bebebe;
+  font-family: 'Ubuntu',sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  position: absolute;
+  top: 29px;
+  left: 92px;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #100E17;
+  border-radius: 15px;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #17141D;
+  color: #B6B6B6;
+  border-radius: 10px;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+.form button {
+  font-family: "Ubuntu", sans-serif;
+  outline: 0;
+  background: #FD5B00;
+  border: 0;
+  padding: 10px 25px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.form button:hover,.form button:active,.form button:focus {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  transform: scale(1.1);
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 14px;
+  font-family: 'Ubuntu',sans-serif;
+}
+.form .message a {
+  color: #FD5B00;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+.error_message{
+  font-family: 'Ubuntu',sans-serif;
+  margin-bottom: 0;
+}
